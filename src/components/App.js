@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import TodoList from "../components/TodoList";
 function App() {
     const [input, setInput] = useState('');
     const [todos, setTodos] = useState([]);
@@ -20,6 +21,7 @@ function App() {
     return (
         <div>
             <input value={input} placeholder='Creat a note' onKeyUp={handleTodos} onChange={handleInput} />
+            <TodoList todos={todos} />
         </div>
     )
 }
