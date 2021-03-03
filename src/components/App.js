@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 function App() {
+    const [input, setInput] = useState('');
+    function handleChange(e) {
+        setInput(e.target.value);
+    }
     return (
         <div>
-            <h1>Todo</h1>
+            <input value={input} placeholder='Creat a note' onChange={handleChange} />
         </div>
     )
 }
