@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import TodoList from "../components/TodoList";
+import styles from '../styles/style.css';
 function App() {
     const [input, setInput] = useState('');
     const [todos, setTodos] = useState([]);
@@ -27,10 +28,15 @@ function App() {
 
     }
     return (
-        <div>
-            <input value={input} placeholder='Creat a note' onKeyUp={handleTodos} onChange={handleInput} />
-            <TodoList deleteTodo={deleteTodo} todos={todos} />
+        <div className='app__body'>
+            <div className='app__input'>
+                <input value={input} placeholder='Creat a note' onKeyUp={handleTodos} onChange={handleInput} />
+            </div>
+            <div className='app__todoList'>
+                <TodoList deleteTodo={deleteTodo} todos={todos} />
+            </div>
         </div>
+
     )
 }
 
