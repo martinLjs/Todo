@@ -13,6 +13,7 @@ function App() {
                 text: e.target.value
             };
             setTodos([...todos, newTodo]);
+            setInput('');
         }
 
 
