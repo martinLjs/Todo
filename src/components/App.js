@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import TodoList from "../components/TodoList";
 import styles from '../styles/style.css';
+import { Context } from "./context";
 function App() {
     const [input, setInput] = useState('');
     const [todos, setTodos] = useState([]);
-    const [CurId, setCurId] = useState(0);
     useEffect(() => {
         let state = JSON.parse(localStorage.getItem('todos')) || [];
         setTodos(state);
@@ -17,28 +17,42 @@ function App() {
         let updatedList = todos.filter(item => item.id != id);
         setTodos(updatedList);
     }
+    const toggleTodo = (id) => {
+        let updatedList = todos.map(
+            item => {
+                if (item.id === id) {
+                    item.checked = !item.checked;
+                }
+                return item;
+            }
+        );
+        console.log(todos)
+        setTodos(updatedList);
+
+    }
     function handleTodos(e) {
         if (e.keyCode == 13 && input !== '') {
             let newTodo = {
-                id: CurId,
+                id: Date.now(),
                 checked: false,
                 text: e.target.value
             };
-            setCurId(CurId + 1);
             setTodos([...todos, newTodo]);
             setInput('');
         }
 
     }
     return (
-        <div className='app__body'>
-            <div className='app__input'>
-                <input value={input} placeholder='Creat a note' onKeyUp={handleTodos} onChange={(e) => setInput(e.target.value)} />
+        <Context.Provider value={{ toggleTodo }}>
+            <div className='app__body'>
+                <div className='app__input'>
+                    <input value={input} placeholder='Creat a note' onKeyUp={handleTodos} onChange={(e) => setInput(e.target.value)} />
+                </div>
+                <div className='app__todoList'>
+                    <TodoList deleteTodo={deleteTodo} todos={todos} />
+                </div>
             </div>
-            <div className='app__todoList'>
-                <TodoList deleteTodo={deleteTodo} todos={todos} />
-            </div>
-        </div>
+        </Context.Provider>
 
     )
 }
