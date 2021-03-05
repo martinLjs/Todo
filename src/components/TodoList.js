@@ -8,7 +8,7 @@ export default function TodoList(props) {
         props.deleteTodo(id);
     }
     if (todoArr.length == 0) { todoList = <div>You do not have any todo</div> } else {
-        todoList = todoArr.map((todo) => <Todo deleteTodo={deleteTodo} checked={todo.checked} text={todo.text} id={todo.id} />)
+        todoList = todoArr.map((todo) => <Todo key={todo.id} deleteTodo={deleteTodo} todo={todo} />)
     }
 
     return (

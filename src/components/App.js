@@ -1,13 +1,18 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import TodoList from "../components/TodoList";
 import styles from '../styles/style.css';
 function App() {
     const [input, setInput] = useState('');
     const [todos, setTodos] = useState([]);
     const [CurId, setCurId] = useState(0);
-    function handleInput(e) {
-        setInput(e.target.value);
-    }
+    useEffect(() => {
+        let state = JSON.parse(localStorage.getItem('todos')) || [];
+        setTodos(state);
+    }, [])
+    useEffect(() => {
+        localStorage.setItem('todos', JSON.stringify(todos))
+
+    }, [todos])
     function deleteTodo(id) {
         let updatedList = todos.filter(item => item.id != id);
         setTodos(updatedList);
@@ -24,13 +29,11 @@ function App() {
             setInput('');
         }
 
-
-
     }
     return (
         <div className='app__body'>
             <div className='app__input'>
-                <input value={input} placeholder='Creat a note' onKeyUp={handleTodos} onChange={handleInput} />
+                <input value={input} placeholder='Creat a note' onKeyUp={handleTodos} onChange={(e) => setInput(e.target.value)} />
             </div>
             <div className='app__todoList'>
                 <TodoList deleteTodo={deleteTodo} todos={todos} />
