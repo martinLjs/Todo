@@ -3,35 +3,32 @@ import TodoList from "../components/TodoList";
 import styles from '../styles/style.css';
 import { Context } from "./context";
 function App() {
+
     const [input, setInput] = useState('');
     const [todos, setTodos] = useState([]);
+
     useEffect(() => {
         let state = JSON.parse(localStorage.getItem('todos')) || [];
         setTodos(state);
     }, [])
     useEffect(() => {
         localStorage.setItem('todos', JSON.stringify(todos))
-
     }, [todos])
-    function deleteTodo(id) {
+
+    const deleteTodo = (id) => {
         let updatedList = todos.filter(item => item.id != id);
         setTodos(updatedList);
     }
     const toggleTodo = (id) => {
         let updatedList = todos.map(
             item => {
-                if (item.id === id) {
-                    item.checked = !item.checked;
-                }
+                if (item.id === id) { item.checked = !item.checked; }
                 return item;
-            }
-        );
-        console.log(todos)
+            });
         setTodos(updatedList);
-
     }
     function handleTodos(e) {
-        if (e.keyCode == 13 && input !== '') {
+        if (e.keyCode === 13 && input !== '') {
             let newTodo = {
                 id: Date.now(),
                 checked: false,
@@ -40,16 +37,15 @@ function App() {
             setTodos([...todos, newTodo]);
             setInput('');
         }
-
     }
     return (
-        <Context.Provider value={{ toggleTodo }}>
+        <Context.Provider value={{ toggleTodo, deleteTodo }}>
             <div className='app__body'>
                 <div className='app__input'>
                     <input value={input} placeholder='Creat a note' onKeyUp={handleTodos} onChange={(e) => setInput(e.target.value)} />
                 </div>
                 <div className='app__todoList'>
-                    <TodoList deleteTodo={deleteTodo} todos={todos} />
+                    <TodoList todos={todos} />
                 </div>
             </div>
         </Context.Provider>

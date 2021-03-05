@@ -4,11 +4,9 @@ export default function TodoList(props) {
     const todoArr = props.todos;
     let todoList;
 
-    function deleteTodo(id) {
-        props.deleteTodo(id);
-    }
+
     if (todoArr.length == 0) { todoList = <div>You do not have any todo</div> } else {
-        todoList = todoArr.map((todo) => <Todo key={todo.id} deleteTodo={deleteTodo} todo={todo} />)
+        todoList = todoArr.map((todo) => <Todo key={todo.id} todo={todo} />)
     }
 
     return (
