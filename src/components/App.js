@@ -39,17 +39,33 @@ function App() {
             let newTodo = {
                 id: Date.now(),
                 checked: false,
-                text: e.target.value
+                text: input
             };
             setTodos([...todos, newTodo]);
             setInput('');
         }
     }
+    function addTodo() {
+        if (input !== '') {
+            let newTodo = {
+                id: Date.now(),
+                checked: false,
+                text: input
+            };
+            setTodos([...todos, newTodo]);
+            setInput('');
+        }
+    }
+    const addTodoBtn = () => { addTodo() }
+    const addTodoByEnter = (e) => { if (e.keyCode === 13) { addTodo() } }
+
+
     return (
         <Context.Provider value={{ toggleTodo, deleteTodo, editTodo }}>
             <div className='app__body'>
                 <div className='app__input'>
-                    <input value={input} placeholder='Creat a note' onKeyUp={addTodo} onChange={(e) => setInput(e.target.value)} />
+                    <input value={input} placeholder='Creat a note' onKeyUp={addTodoByEnter} onChange={(e) => setInput(e.target.value)} />
+                    <div onClick={addTodoBtn}>+</div>
                 </div>
                 <div className='app__todoList'>
                     <TodoList todos={todos} />
