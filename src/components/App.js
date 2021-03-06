@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import TodoList from "../components/TodoList";
-import styles from '../styles/style.css';
+import Folders from './Folders';
 import { Context } from "./context";
+import styles from '../styles/style.css';
+
 function App() {
 
     const [input, setInput] = useState('');
     const [todos, setTodos] = useState([]);
+    const [currentFolder, setCurrentFolder] = useState('all');
+    const [folders, setFolders] = useState(['all', 'home']);
 
     useEffect(() => {
         let state = JSON.parse(localStorage.getItem('todos')) || [];
@@ -14,7 +18,9 @@ function App() {
     useEffect(() => {
         localStorage.setItem('todos', JSON.stringify(todos))
     }, [todos])
+    useEffect(() => {
 
+    }, [currentFolder])
     const deleteTodo = (id) => {
         let updatedList = todos.filter(item => item.id != id);
         setTodos(updatedList);
@@ -26,6 +32,7 @@ function App() {
                 return item;
             });
         setTodos(updatedList);
+        console.log(todos)
     }
     const editTodo = (id, value) => {
         let updatedList = todos.map(item => {
@@ -34,22 +41,13 @@ function App() {
         })
         setTodos(updatedList);
     }
-    function addTodo(e) {
-        if (e.keyCode === 13 && input !== '') {
-            let newTodo = {
-                id: Date.now(),
-                checked: false,
-                text: input
-            };
-            setTodos([...todos, newTodo]);
-            setInput('');
-        }
-    }
+
     function addTodo() {
         if (input !== '') {
             let newTodo = {
                 id: Date.now(),
                 checked: false,
+                folder: ['all', currentFolder],
                 text: input
             };
             setTodos([...todos, newTodo]);
@@ -61,8 +59,14 @@ function App() {
 
 
     return (
-        <Context.Provider value={{ toggleTodo, deleteTodo, editTodo }}>
+        <Context.Provider value={{ toggleTodo, deleteTodo, editTodo, setCurrentFolder, currentFolder }}>
             <div className='app__body'>
+                <div className='sidebar'>
+                    <div>{currentFolder}</div>
+                    <div>Add folder</div>
+                    <Folders folders={folders} />
+                </div>
+
                 <div className='app__input'>
                     <input value={input} placeholder='Creat a note' onKeyUp={addTodoByEnter} onChange={(e) => setInput(e.target.value)} />
                     <div onClick={addTodoBtn}>+</div>

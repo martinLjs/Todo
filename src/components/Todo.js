@@ -1,14 +1,17 @@
-import React, { useState, useContext } from 'react'
+import React, { useContext } from 'react'
 import { Context } from "./context";
 
 export default function Todo(props) {
 
-    const { id, text, checked } = props.todo;
-    const { toggleTodo, deleteTodo, editTodo } = useContext(Context);
+    const { id, text, checked, folder } = props.todo;
+    const { toggleTodo, deleteTodo, editTodo, currentFolder } = useContext(Context);
     let classes = ['todo'];
     if (checked) {
         classes.push('completed');
     }
+    // if (!folder.includes(currentFolder)) {
+    //     classes.push('hide');
+    // }
 
     return (
         <div className={classes.join(' ')}>
