@@ -27,7 +27,14 @@ function App() {
             });
         setTodos(updatedList);
     }
-    function handleTodos(e) {
+    const editTodo = (id, value) => {
+        let updatedList = todos.map(item => {
+            if (item.id === id) { item.text = value.target.value }
+            return item;
+        })
+        setTodos(updatedList);
+    }
+    function addTodo(e) {
         if (e.keyCode === 13 && input !== '') {
             let newTodo = {
                 id: Date.now(),
@@ -39,10 +46,10 @@ function App() {
         }
     }
     return (
-        <Context.Provider value={{ toggleTodo, deleteTodo }}>
+        <Context.Provider value={{ toggleTodo, deleteTodo, editTodo }}>
             <div className='app__body'>
                 <div className='app__input'>
-                    <input value={input} placeholder='Creat a note' onKeyUp={handleTodos} onChange={(e) => setInput(e.target.value)} />
+                    <input value={input} placeholder='Creat a note' onKeyUp={addTodo} onChange={(e) => setInput(e.target.value)} />
                 </div>
                 <div className='app__todoList'>
                     <TodoList todos={todos} />
