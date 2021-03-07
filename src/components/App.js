@@ -18,9 +18,15 @@ function App() {
     useEffect(() => {
         localStorage.setItem('todos', JSON.stringify(todos))
     }, [todos])
-    useEffect(() => {
 
-    }, [currentFolder])
+    useEffect(() => {
+        let state = JSON.parse(localStorage.getItem('folders')) || [];
+        setFolders(state);
+    }, [])
+    useEffect(() => {
+        localStorage.setItem('folders', JSON.stringify(folders))
+    }, [folders])
+
     const deleteTodo = (id) => {
         let updatedList = todos.filter(item => item.id != id);
         setTodos(updatedList);
