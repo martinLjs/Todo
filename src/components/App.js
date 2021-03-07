@@ -20,12 +20,22 @@ function App() {
     }, [todos])
 
     useEffect(() => {
-        let state = JSON.parse(localStorage.getItem('folders')) || [];
+        let state = JSON.parse(localStorage.getItem('folders')) || ['all'];
         setFolders(state);
     }, [])
     useEffect(() => {
         localStorage.setItem('folders', JSON.stringify(folders))
     }, [folders])
+
+
+    useEffect(() => {
+        let state = JSON.parse(localStorage.getItem('currentFolder')) || [];
+        setCurrentFolder(state);
+    }, [])
+
+    useEffect(() => {
+        localStorage.setItem('currentFolder', JSON.stringify(currentFolder))
+    }, [currentFolder])
 
     const deleteTodo = (id) => {
         let updatedList = todos.filter(item => item.id != id);
