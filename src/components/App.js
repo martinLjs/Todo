@@ -57,6 +57,13 @@ function App() {
     const addTodoBtn = () => { addTodo() }
     const addTodoByEnter = (e) => { if (e.keyCode === 13) { addTodo() } }
 
+    const addFolder = (e) => {
+        if (e.keyCode === 13) {
+            setFolders([...folders, e.target.value]);
+            e.target.value = '';
+        }
+
+    }
 
     return (
         <Context.Provider value={{ toggleTodo, deleteTodo, editTodo, setCurrentFolder, currentFolder }}>
@@ -64,6 +71,7 @@ function App() {
                 <div className='sidebar'>
                     <div>{currentFolder}</div>
                     <div>Add folder</div>
+                    <input placeholder='Creat a folder' onKeyUp={addFolder} />
                     <Folders folders={folders} />
                 </div>
 
