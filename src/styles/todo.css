@@ -1,0 +1,48 @@
+.completed{
+    text-decoration: line-through;
+}
+.todo{
+    position: relative;
+    width: 100%;
+    border-bottom: 1px solid #000;
+}
+.todo__text{
+    padding: 15px;
+    text-decoration: inherit !important;	
+    border: none;
+    font-size: 30px;
+    top: 0;
+    right: 62px;
+    
+}
+.todo_delete{
+    margin: 15px;
+    width: 32px;
+    height: 32px;
+
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-image: url('../img/delete.png');
+}
+.todo_delete:hover{
+    background-image: url('../img/onDelete.png');
+
+}
+.check{
+    margin: 15px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 32px;
+    height: 32px;
+}
+.checkTrue{
+    background-image: url('../img/mark.png');
+}
+.checkFalse{
+    background-image: url('../img/circle.png');
+}
+.hide{
+    display: none;
+}
