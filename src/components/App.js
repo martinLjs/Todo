@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import TodoList from "../components/TodoList";
 import Folders from './Folders';
 import { Context } from "./context";
-import styles from '../styles/style.css';
+import styles from '../styles/app.css';
 
 function App() {
 
@@ -84,19 +84,23 @@ function App() {
     return (
         <Context.Provider value={{ toggleTodo, deleteTodo, editTodo, setCurrentFolder, currentFolder }}>
             <div className='app__body'>
-                <div className='sidebar'>
-                    <div>{currentFolder}</div>
-                    <div>Add folder</div>
-                    <input placeholder='Creat a folder' onKeyUp={addFolder} />
-                    <Folders folders={folders} />
-                </div>
-
-                <div className='app__input'>
-                    <input value={input} placeholder='Creat a note' onKeyUp={addTodoByEnter} onChange={(e) => setInput(e.target.value)} />
-                    <div onClick={addTodoBtn}>+</div>
-                </div>
-                <div className='app__todoList'>
-                    <TodoList todos={todos} />
+                <div className='container'>
+                    <div className='app__sidebar'>
+                        <div>Your folders:</div>
+                        <div>Add folder</div>
+                        <input placeholder='Creat a folder' onKeyUp={addFolder} />
+                        <Folders folders={folders} />
+                    </div>
+                    <div className='app__content'>
+                        <div className='app__currentFolder'>{currentFolder}</div>
+                        <div className='input__wrapper'>
+                            <input className='app__input' value={input} placeholder='Creat a note' onKeyUp={addTodoByEnter} onChange={(e) => setInput(e.target.value)} />
+                            <div className='input__btn' onClick={addTodoBtn}>+</div>
+                        </div>
+                        <div className='app__todoList'>
+                            <TodoList todos={todos} />
+                        </div>
+                    </div>
                 </div>
             </div>
         </Context.Provider>

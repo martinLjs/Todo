@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { Context } from "./context";
 import Todo from "../components/Todo";
+import styles from '../styles/todoList.css'
 
 export default function TodoList(props) {
 
@@ -16,7 +17,7 @@ export default function TodoList(props) {
     }
 
     return (
-        <div>
+        <div className='todoList'>
             {todoList}
         </div>
     )
